@@ -1,5 +1,6 @@
 <?php
 include '../includes/conexion.php';
+session_start();
 
 if (isset($_POST['Register'])) {
     // Recoger datos del formulario
@@ -95,5 +96,9 @@ if(isset($_POST['Login'])){
         echo "<script>alert('¡Usuario No Encontrado!');</script>";
     }
 
+    $stmt->close();
+    $conexion->close();
+
 }
+
 ?>

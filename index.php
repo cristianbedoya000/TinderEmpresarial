@@ -2,10 +2,14 @@
 <html>
 <head>
     <title>Tinder Empresarial</title>
+    <link rel="stylesheet" href="styles/portada.css">
 </head>
 <body>
-    <h1>Tinder Empresarial</h1>
-
-    <a href="/TinderEmpresarial/views/login.php"><button>Continuar</button></a>
+    <div class="background">
+        <div class="contenido">
+            <h1>Bienvenido a la Plataforma de Alianzas</h1>
+            <button class="btn" onclick="location.href='/TinderEmpresarial/views/login.php'">Ingresar</button>
+        </div>
+    </div>
 </body>
 </html>
