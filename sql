@@ -12,6 +12,7 @@ CREATE TABLE clientes (
     intereses ENUM('Alianza', 'Invertir', 'Ambos') NOT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 likes (
   id INT PRIMARY KEY AUTO_INCREMENT,
   id_emisor INT,

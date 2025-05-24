@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
-    <div class="container" id="Register">
+    <div class="container" id="Register" style="display: none;">
         <h1>Registrar Usuario</h1>
-        <form action="" method="POST">
+        <form action="../controllers/sesion.php" method="POST">
             <div class="input-group">
                 <i class="fa-solid fa-image"></i>
-                <input type="file" id="imagen" name="imagen" required><br>
+                <input type="file" id="imagen" name="fotoperfil" required><br>
             </div>
             <div class="input-group">
                 <i class="fa-solid fa-user"></i>
@@ -92,9 +92,30 @@
         </form>
         <div>
             <p>Ya tienes una cuenta?</p>
-            <button class="btn-or" id="IniciarSesion">Iniciar Sesion</button>
+            <button class="btn-or" id="LoginBtn">Iniciar Sesion</button>
+        </div>
+    </div>
+
+    <div class="container" id="Login">
+        <h1>Iniciar Sesion</h1>
+        <form action="../controllers/sesion.php" method="POST">
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" name="correo" id="correo" placeholder="Ingrese correo" required><br>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese contraseña" required><br>
+            </div>
+            <button type="submit" class="btn" name="Login" value="Login">Iniciar Sesion</button>
+        </form>
+        <div>
+            <p>Necesitas una cuenta?</p>
+            <button class="btn-or" id="RegisterBtn">Registrarse</button>
         </div>
     </div>
     <script src="../js/ciudades.js"></script>
+    <script src="../js/form-login.js"></script>
+    
 </body>
 </html>

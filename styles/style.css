@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4e3ff; /* Fondo lila claro */
+    background-color: #F4F7FA; /* Fondo claro corporativo */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,7 @@ body {
 }
 
 h1 {
-    color: #6a0dad; /* Lila oscuro */
+    color: #1F4E79; /* Azul principal corporativo */
     margin-bottom: 20px;
 }
 
@@ -33,38 +33,35 @@ h1 {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #6a0dad;
+    color: #1F4E79;
     font-size: 18px;
 }
 
-.input-group input, .input-group select {
+.input-group input,
+.input-group select {
     width: 100%;
-    padding: 10px 40px; /* Espacio suficiente para ícono */
-    border: 2px solid #b784eb;
+    padding: 10px 40px;
+    border: 2px solid #5B9BD5;
     border-radius: 5px;
     outline: none;
-    background: #f4e3ff;
+    background: #EAF0F7;
     box-sizing: border-box;
     font-size: 16px;
 }
 
 .input-group input::placeholder {
-    color: #6a0dad;
-    font-size: 14px; /* Ajustar el tamaño */
+    color: #1F4E79;
+    font-size: 14px;
 }
 
 .input-group select {
     cursor: pointer;
 }
 
-.input-group input::placeholder {
-    color: #6a0dad;
-}
-
 .btn {
     width: 100%;
     padding: 10px;
-    background: #6a0dad;
+    background: #1F4E79;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -75,13 +72,13 @@ h1 {
 }
 
 .btn:hover {
-    background: #4b0082; /* Tonalidad más oscura */
+    background: #123456; /* Azul oscuro */
 }
 
 .btn-or {
     width: 50%;
     padding: 10px;
-    background: #6a0dad;
+    background: #1F4E79;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -92,8 +89,5 @@ h1 {
 }
 
 .btn-or:hover {
-    background: #4b0082; /* Tonalidad más oscura */
+    background: #123456;
 }
-
-
-
