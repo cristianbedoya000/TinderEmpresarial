@@ -3,18 +3,21 @@ include '../includes/conexion.php';
 session_start();
 
 if (isset($_POST['Register'])) {
+
+    /*
     // Recoger datos del formulario
-    $fotoperfil = isset($_FILES['imagen']['name']) ? $_FILES['imagen']['name'] : null;
+    $fotoperfil = isset($_FILES['imagen']['name']) ? $_FILES['imagen']['name'] : null;*/
  // Obtener el nombre del archivo subido
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
     $password = $_POST['contraseña'];
     $industria = $_POST['industria'];
-    $descripcion = !empty($_POST['descripcion']) ? $_POST['descripcion'] : 'Sin descripción';
+    $descripcion = !empty($_POST['descripcion']) ? $_POST['descripcion'] : 
     $pais = $_POST['pais'];
     $ciudad = $_POST['ciudad'];
     $direccion = $_POST['direccion'];
     $intereses = $_POST['intereses'];
+    
 
     // Validación de contraseña: mínimo 8 caracteres, una mayúscula y un carácter especial
     if (!preg_match("/^(?=.*[A-Z])(?=.*\W).{8,}$/", $password)) {
@@ -37,24 +40,40 @@ if (isset($_POST['Register'])) {
         exit();
     }
 
-    // Mover la imagen a una carpeta segura antes de guardarla en la base de datos
+    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] != 0) {
+        echo "<script>alert('Es obligatorio subir una imagen.');</script>";
+        exit();
+    }
+
     $directorioDestino = "../uploads/";
-    $rutaImagen = $directorioDestino . basename($fotoperfil);
-    move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaImagen);
+
+    if (!is_dir($directorioDestino)) {
+        mkdir($directorioDestino, 0777, true); // Crear la carpeta si no existe
+    }
+
+    // Mover la imagen a una carpeta segura antes de guardarla en la base de datos
+    $fotoperfil = basename($_FILES['imagen']['name']);
+    $rutaImagen = $directorioDestino . $fotoperfil;
+
+    if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaImagen)) {
+        echo "<script>alert('Error al mover la imagen');</script>";
+        exit();
+    }
+
+    echo "<script>console.log('Imagen subida correctamente: " . $rutaImagen . "');</script>";
 
     // Insertar usuario en la base de datos con consulta preparada
     $insertQuery = "INSERT INTO clientes (imagen, nombre, correo, contraseña, industria, descripcion, pais, ciudad, direccion, intereses) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conexion->prepare($insertQuery);
     $stmt->bind_param("ssssssssss", $rutaImagen, $nombre, $correo, $contraseñaHash, $industria, $descripcion, $pais, $ciudad, $direccion, $intereses);
 
-    if ($stmt->execute()) {
-        header("Location: ../views/Inicio.php");
-        exit();
-    } else {
-        echo "<script>alert('Error en el registro: " . $conexion->error . "');</script>";
+    if (!$stmt->execute()) {
+        die("Error en la inserción: " . $stmt->error);
     }
+    echo "<script>console.log('Ruta guardada en la base de datos: " . $rutaImagen . "');</script>";
+    header("Location: ../views/Inicio.php");
+    exit();
 }
-
 
 if(isset($_POST['Login'])){
     $correo = $_POST['correo'];

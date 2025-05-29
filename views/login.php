@@ -8,10 +8,10 @@
 <body>
     <div class="container" id="Register" style="display: none;">
         <h1>Registrar Usuario</h1>
-        <form action="../controllers/sesion.php" method="POST">
+        <form action="../controllers/sesion.php" method="POST" enctype="multipart/form-data">
             <div class="input-group">
                 <i class="fa-solid fa-image"></i>
-                <input type="file" id="imagen" name="fotoperfil" required><br>
+                <input type="file" id="imagen" name="imagen" required><br>
             </div>
             <div class="input-group">
                 <i class="fa-solid fa-user"></i>
