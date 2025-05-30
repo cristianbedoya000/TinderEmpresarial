@@ -1,0 +1,144 @@
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 9
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 2
+    [accion] => dislike
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 9
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 9
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 1
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 8
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 8
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 7
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 10
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 4
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 4
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 1
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 4
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 10
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 7
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 7
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 5
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 8
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 1
+    [clienteId] => 6
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 6
+    [clienteId] => 10
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 6
+    [clienteId] => 6
+    [accion] => dislike
+)
+Array
+(
+    [idEmisor] => 6
+    [clienteId] => 8
+    [accion] => like
+)
+Array
+(
+    [idEmisor] => 6
+    [clienteId] => 8
+    [accion] => dislike
+)
+Array
+(
+    [idEmisor] => 6
+    [clienteId] => 2
+    [accion] => dislike
+)

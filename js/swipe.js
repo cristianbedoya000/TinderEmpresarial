@@ -8,42 +8,53 @@ let pullDeltaX = 0; // Distancia que se arrastra la tarjeta
 async function obtenerClienteAleatorio(respaldo = false) {
     try {
         const response = await fetch("../controllers/obtener_cliente.php");
-        const cliente = await response.json();
+        const data = await response.json();
 
-        console.log("Cliente obtenido:", cliente);
+        console.log("Datos recibidos del backend:", data); // 🔹 Depuración
 
-        if (cliente.error) {
-            document.querySelector(".cards").innerHTML = `<span>${cliente.error}</span>`;
-        } else {
-            const nuevaTarjeta = document.createElement("article");
-            nuevaTarjeta.classList.add("card", "article");
-
-            nuevaTarjeta.innerHTML = `
-                <img src="${cliente.imagen}" alt="${cliente.nombre}" onerror="this.src='uploads/default.jpg';" />
-                <h2>${cliente.nombre}</h2>
-                <p><strong>Industria:</strong> ${cliente.industria}</p>
-                <p><strong>País:</strong> ${cliente.pais}</p>
-                <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
-                <p><strong>Intereses:</strong> ${cliente.intereses}</p>
-                <div class="choice nope">NOPE</div>
-                <div class="choice like">LIKE</div>
-            `;
-
-            if (respaldo) {
-                nuevaTarjeta.style.display = "none"; // 📌 Ocultamos la tarjeta de respaldo hasta que sea necesaria
-            }
-
-            document.querySelector(".cards").appendChild(nuevaTarjeta);
-            console.log(respaldo ? "Tarjeta de respaldo generada." : "Nueva tarjeta agregada al DOM:", nuevaTarjeta);
-
-            // 📌 Agregar eventos de swipe a la nueva tarjeta
-            nuevaTarjeta.addEventListener("mousedown", startDrag);
-            nuevaTarjeta.addEventListener("touchstart", startDrag, { passive: true });
+        if (!data.cliente) {
+            console.error("Error: Cliente no encontrado en la respuesta del servidor.");
+            document.querySelector(".cards").innerHTML = `<span>Error al cargar cliente</span>`;
+            return;
         }
+
+        // Guardar el ID del usuario actual para usar en registrarAccion
+        window.usuarioActualId = data.usuario_actual;
+        console.log("ID del usuario actual asignado correctamente:", window.usuarioActualId);
+
+        const cliente = data.cliente;
+
+        const nuevaTarjeta = document.createElement("article");
+        nuevaTarjeta.classList.add("card", "article");
+
+        nuevaTarjeta.innerHTML = `
+            <img src="${cliente.imagen}" alt="${cliente.nombre}" onerror="this.src='uploads/default.jpg';" />
+            <h2>${cliente.nombre}</h2>
+            <p><strong>Industria:</strong> ${cliente.industria}</p>
+            <p><strong>País:</strong> ${cliente.pais}</p>
+            <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
+            <p><strong>Intereses:</strong> ${cliente.intereses}</p>
+            <div class="choice nope">NOPE</div>
+            <div class="choice like">LIKE</div>
+        `;
+        nuevaTarjeta.dataset.id = cliente.id;
+
+        if (respaldo) {
+            nuevaTarjeta.style.display = "none"; 
+        }
+
+        document.querySelector(".cards").appendChild(nuevaTarjeta);
+
+        nuevaTarjeta.addEventListener("mousedown", startDrag);
+        nuevaTarjeta.addEventListener("touchstart", startDrag, { passive: true });
+
     } catch (error) {
         console.error("Error al obtener el cliente:", error);
     }
 }
+
+
+
 
 
 // Función para manejar el arrastre de tarjetas
@@ -96,21 +107,21 @@ function startDrag(event) {
 
             actualCard.addEventListener("transitionend", (event) => {
                 if (event.propertyName !== "transform") return;
-
-                console.log("Swipe confirmado, eliminando tarjeta...");
+                const action = goRight ? "like" : "dislike";
+                const clienteId = actualCard.dataset.id;
+                registrarAccion(clienteId, action);
                 actualCard.remove();
                 isAnimating = false;
-
                 const tarjetaRespaldo = document.querySelector(".card[style='display: none;']");
-                if(tarjetaRespaldo){
-                    tarjetaRespaldo.style.display="";
-                    console.log("tarjeta de respaldo activada.");
+                if (tarjetaRespaldo) {
+                    tarjetaRespaldo.style.display = "";
+                    console.log("Tarjeta de respaldo activada.");
                 }
+                obtenerClienteAleatorio();
+                });
+                } else {
+                    console.log("Swipe cancelado, tarjeta vuelve a su posición.");
 
-                obtenerClienteAleatorio();             
-            });
-        } else {
-            console.log("Swipe cancelado, tarjeta vuelve a su posición.");
 
             actualCard.classList.remove("go-right", "go-left");
             actualCard.classList.add("reset");
@@ -127,6 +138,37 @@ function startDrag(event) {
         actualCard.querySelectorAll(".choice").forEach(el => (el.style.opacity = 0));
     }
 }
+
+function registrarAccion(clienteId, accion) {
+    const idEmisor = window.usuarioActualId; // El ID del usuario que inició sesión
+     if (!idEmisor || !clienteId || !accion) {
+        console.error("Error: Datos inválidos al registrar acción:", { idEmisor, clienteId, accion });
+        return;
+    }
+
+    console.log("Enviando datos al backend:", { idEmisor, clienteId, accion });
+
+    fetch("../controllers/guardar_accion.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ idEmisor, clienteId, accion })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Respuesta del servidor:", data);
+        if (data.error) {
+            alert("Error: " + data.error);
+        } else {
+            console.log("Acción registrada correctamente");
+        }
+    })
+    .catch(error => {
+        console.error("Error en la petición:", error);
+    });
+}
+
 
 // Llamar la función para cargar un cliente al iniciar la página
 document.addEventListener("DOMContentLoaded", () => {

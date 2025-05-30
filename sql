@@ -18,14 +18,14 @@ likes (
   id_emisor INT,
   id_receptor INT,
   fecha DATETIME,
-  FOREIGN KEY (id_emisor) REFERENCES empresas(id),
-  FOREIGN KEY (id_receptor) REFERENCES empresas(id)
+  FOREIGN KEY (id_emisor) REFERENCES clientes(id),
+  FOREIGN KEY (id_receptor) REFERENCES clientes(id)
 );
 
 matches (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  id_empresa1 INT,
-  id_empresa2 INT,
+  id_cliente1 INT,
+  id_cliente2 INT,
   fecha DATETIME
 );
 
